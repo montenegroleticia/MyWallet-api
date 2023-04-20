@@ -2,8 +2,11 @@ import express from "express";
 import cors from "cors";
 import { MongoClient } from "mongodb";
 import dotenv from "dotenv";
-import { postCadastro, postLogin } from "../controllers/user.js";
-import { postTransacao, getHome } from "../controllers/transaction.js";
+import { postCadastro, postLogin } from "../controllers/userController.js";
+import {
+  postTransacao,
+  getHome,
+} from "../controllers/transactionController.js";
 
 const app = express();
 
