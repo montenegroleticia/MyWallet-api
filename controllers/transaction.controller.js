@@ -13,7 +13,7 @@ export async function getHome(req, res) {
         .reverse();
       res.send(transactions);
     } else {
-      res.sendStatus(401);
+      res.send("Usuário não encontrado.");
     }
   } catch (err) {
     res.status(500).send(err.message);

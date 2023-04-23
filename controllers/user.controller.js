@@ -6,12 +6,12 @@ export async function postCadastro(req, res) {
   const { email, senha } = req.body;
 
   try {
-    const user = await db.collection("usuarios").findOne({ email });
+    const user = await db.collection("users").findOne({ email });
     if (user) return res.status(409).send("Esse email já existe");
 
     const hash = bcrypt.hashSync(senha, 10);
 
-    await db.collection("usuarios").insertOne({ email, hash });
+    await db.collection("users").insertOne({ email, hash });
     res.sendStatus(201);
   } catch (err) {
     res.status(500).send(err.message);
@@ -23,10 +23,10 @@ export async function postLogin(req, res) {
 
   try {
     const user = await db.collection("users").findOne({ email });
-    if (!user) return res.status(401).send("Email inválido!");
+    if (!user) return res.status(422).send("Email inválido!");
 
     const passwordIsCorrect = bcrypt.compareSync(senha, user.senha);
-    if (!passwordIsCorrect) return res.status(401).send("Senha incorreta!");
+    if (!passwordIsCorrect) return res.status(422).send("Senha incorreta!");
 
     const token = uuid();
     await db.collection("sections").insertOne({ token, userId: user._id });
