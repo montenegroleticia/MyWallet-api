@@ -6,10 +6,10 @@ export default async function authValidation(req, res, next) {
   if (!token) return res.sendStatus(401);
 
   try {
-    const section = await db.collection("sections").findOne({ token });
-    if (!section) return res.sendStatus(401);
+    const session = await db.collection("sessions").findOne({ token });
+    if (!session) return res.sendStatus(401);
 
-    res.locals.section = section;
+    res.locals.session = session;
 
     next();
   } catch {

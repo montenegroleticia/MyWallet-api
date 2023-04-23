@@ -4,12 +4,13 @@ export async function postTransacao(req, res) {}
 
 export async function getHome(req, res) {
   try {
-    const section = res.locals.section;
-    const user = await db.collection("users").findOne({ _id: section.userId });
+    const session = res.locals.session;
+    const user = await db.collection("users").findOne({ _id: session.userId });
     if (user) {
       const transactions = await db
         .collection("transactions")
-        .find(_id)
+        .find({ userId: session.userId })
+        .toArray()
         .reverse();
       res.send(transactions);
     } else {

@@ -22,14 +22,14 @@ export async function postLogin(req, res) {
   const { email, senha } = req.body;
 
   try {
-    const user = await db.collection("users").findOne({ email });
+    const user = await db.collection("users").findOne({email});
     if (!user) return res.status(422).send("Email inválido!");
 
-    const passwordIsCorrect = bcrypt.compareSync(senha, user.senha);
+    const passwordIsCorrect = bcrypt.compareSync(senha, user.hash);
     if (!passwordIsCorrect) return res.status(422).send("Senha incorreta!");
 
     const token = uuid();
-    await db.collection("sections").insertOne({ token, userId: user._id });
+    await db.collection("sessions").insertOne({ token, userId: user._id });
     res.status(200).send(token);
   } catch (err) {
     res.status(500).send(err.message);
