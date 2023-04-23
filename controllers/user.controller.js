@@ -1,9 +1,6 @@
 import bcrypt from "bcrypt";
-
-const userSchema = joi.object({
-  email: joi.email().required(),
-  senha: joi.string().required().min(3),
-});
+import userSchema from "../schemas/user.schemas.js";
+import db from "../database/database.conection.js";
 
 export async function postCadastro(req, res) {
   const { email, senha } = req.body;

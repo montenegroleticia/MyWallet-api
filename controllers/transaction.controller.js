@@ -1,3 +1,5 @@
+import db from "../database/database.conection.js";
+
 export async function postTransacao(req, res) {}
 
 export async function getHome(req, res) {
