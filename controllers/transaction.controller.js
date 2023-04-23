@@ -9,7 +9,7 @@ export async function getHome(req, res) {
     if (user) {
       const transactions = await db
         .collection("transactions")
-        .find({ userId: session.userId })
+        .find({ _id: session.userId })
         .toArray()
         .reverse();
       res.send(transactions);

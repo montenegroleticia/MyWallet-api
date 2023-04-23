@@ -22,7 +22,7 @@ export async function postLogin(req, res) {
   const { email, senha } = req.body;
 
   try {
-    const user = await db.collection("users").findOne({email});
+    const user = await db.collection("users").findOne({ email });
     if (!user) return res.status(422).send("Email inválido!");
 
     const passwordIsCorrect = bcrypt.compareSync(senha, user.hash);
@@ -31,6 +31,15 @@ export async function postLogin(req, res) {
     const token = uuid();
     await db.collection("sessions").insertOne({ token, userId: user._id });
     res.status(200).send(token);
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
+}
+
+export async function deleteLogout(req, res) {
+  try {
+    const token = res.locals.session.token;
+    await db.collection("sessions").deleteOne({ token });
   } catch (err) {
     res.status(500).send(err.message);
   }

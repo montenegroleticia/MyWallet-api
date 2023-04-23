@@ -1,18 +1,18 @@
 import db from "../database/database.conection.js";
 
 export default async function authValidation(req, res, next) {
-  const { autorization } = req.header;
-  const token = autorization?.replace("Bearer", "");
+  const { authorization } = req.header;
+  const token = authorization?.replace("Bearer ", "");
   if (!token) return res.sendStatus(401);
 
   try {
     const session = await db.collection("sessions").findOne({ token });
-    if (!session) return res.sendStatus(401);
+    if (!session) return res.sendStatus(404);
 
     res.locals.session = session;
 
     next();
-  } catch {
+  } catch (err) {
     res.status(500).send(err.message);
   }
 }
