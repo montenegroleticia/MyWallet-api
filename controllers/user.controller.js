@@ -1,6 +1,7 @@
 import bcrypt from "bcrypt";
 import userSchema from "../schemas/user.schemas.js";
 import db from "../database/database.conection.js";
+import { v4 as uuid } from "uuid";
 
 export async function postCadastro(req, res) {
   const { email, senha } = req.body;
@@ -34,13 +35,15 @@ export async function postLogin(req, res) {
   }
 
   try {
-    const user = await db.collection("usuarios").findOne({ email });
+    const user = await db.collection("users").findOne({ email });
     if (!user) return res.status(401).send("Email inválido!");
 
     const passwordIsCorrect = bcrypt.compareSync(senha, user.senha);
     if (!passwordIsCorrect) return res.status(401).send("Senha incorreta!");
 
-    res.sendStatus(200);
+    const token = uuid();
+    await db.collection("sections").insertOne({ token, userId: user._id });
+    res.status(200).send(token);
   } catch (err) {
     res.status(500).send(err.message);
   }
