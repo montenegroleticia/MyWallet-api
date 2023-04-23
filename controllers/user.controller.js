@@ -1,16 +1,9 @@
 import bcrypt from "bcrypt";
-import userSchema from "../schemas/user.schemas.js";
 import db from "../database/database.conection.js";
 import { v4 as uuid } from "uuid";
 
 export async function postCadastro(req, res) {
   const { email, senha } = req.body;
-
-  const validation = userSchema.validate(req.body, { abortEarly: false });
-  if (validation.err) {
-    const erros = validation.err.details.map((detail) => detail.message);
-    return res.status(422).send(erros);
-  }
 
   try {
     const user = await db.collection("usuarios").findOne({ email });
@@ -27,12 +20,6 @@ export async function postCadastro(req, res) {
 
 export async function postLogin(req, res) {
   const { email, senha } = req.body;
-
-  const validation = userSchema.validate(req.body, { abortEarly: false });
-  if (validation.err) {
-    const erros = validation.err.details.map((detail) => detail.message);
-    return res.status(422).send(erros);
-  }
 
   try {
     const user = await db.collection("users").findOne({ email });
