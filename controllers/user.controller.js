@@ -38,8 +38,9 @@ export async function postLogin(req, res) {
 
 export async function deleteLogout(req, res) {
   try {
-    const token = res.locals.session.token;
+    const token = res.locals.token;
     await db.collection("sessions").deleteOne({ token });
+    res.sendStatus(200);
   } catch (err) {
     res.status(500).send(err.message);
   }
