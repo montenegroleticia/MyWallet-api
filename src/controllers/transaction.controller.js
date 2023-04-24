@@ -8,8 +8,10 @@ const date = day + "/" + month;
 export async function postTransacao(req, res) {
   const { valor, descricao } = req.body;
   const { tipo } = req.params;
+
   if (tipo !== "entrada" && tipo !== "saida") return res.sendStatus(422);
   const session = res.locals.session;
+
   try {
     await db.collection("transactions").insertOne({
       userId: session.userId,

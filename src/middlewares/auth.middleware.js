@@ -7,7 +7,7 @@ export default async function authValidation(req, res, next) {
 
   try {
     const session = await db.collection("sessions").findOne({ token });
-    if (!session) return res.sendStatus(404);
+    if (!session) return res.status(404).send("Nenhum token encontrado");
 
     res.locals.session = session;
     res.locals.token = token;
