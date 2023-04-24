@@ -29,7 +29,7 @@ export async function postLogin(req, res) {
     if (!passwordIsCorrect) return res.status(422).send("Senha incorreta!");
 
     const token = uuid();
-    await db.collection("sessions").insertOne({ token, userId: user._id });
+    await db.collection("sessions").insertOne({ name: user.nome, token, userId: user._id });
 
     res.status(200).send(token);
   } catch (err) {
