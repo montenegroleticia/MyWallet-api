@@ -28,10 +28,13 @@ export async function postLogin(req, res) {
     const passwordIsCorrect = bcrypt.compareSync(senha, user.hash);
     if (!passwordIsCorrect) return res.status(422).send("Senha incorreta!");
 
+    const name = user.nome;
     const token = uuid();
-    await db.collection("sessions").insertOne({ name: user.nome, token, userId: user._id });
+    await db
+      .collection("sessions")
+      .insertOne({ name, token, userId: user._id });
 
-    res.status(200).send(token);
+    res.status(200).send({token, name});
   } catch (err) {
     res.status(500).send(err.message);
   }
