@@ -2,7 +2,7 @@ import db from "../database/database.conection.js";
 
 export default async function authValidation(req, res, next) {
   const { authorization } = req.headers;
-  const token = authorization?.replace("Bearer ", "");
+  const token = authorization?.replace("Bearer ", "").trim();
   if (!token) return res.sendStatus(401);
 
   try {

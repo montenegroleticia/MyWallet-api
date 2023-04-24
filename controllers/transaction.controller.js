@@ -1,6 +1,19 @@
 import db from "../database/database.conection.js";
 
-export async function postTransacao(req, res) {}
+export async function postTransacao(req, res) {
+  const { valor, descricao } = req.body;
+  const { tipo } = req.params;
+  if (tipo !== "entrada" && tipo !== "saida") return res.sendStatus(422);
+
+  try {
+    await db
+      .collection("transactions")
+      .insertOne({ tipo: tipo, valor: valor, descricao: descricao });
+    res.sendStatus(201);
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
+}
 
 export async function getHome(req, res) {
   try {
