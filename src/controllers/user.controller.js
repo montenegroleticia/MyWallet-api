@@ -3,7 +3,7 @@ import db from "../database/database.conection.js";
 import { v4 as uuid } from "uuid";
 
 export async function postCadastro(req, res) {
-  const { email, senha } = req.body;
+  const { nome, email, senha } = req.body;
 
   try {
     const user = await db.collection("users").findOne({ email });
@@ -11,7 +11,7 @@ export async function postCadastro(req, res) {
 
     const hash = bcrypt.hashSync(senha, 10);
 
-    await db.collection("users").insertOne({ email, hash });
+    await db.collection("users").insertOne({ nome, email, hash });
     res.sendStatus(201);
   } catch (err) {
     res.status(500).send(err.message);
