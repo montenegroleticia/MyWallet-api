@@ -10,9 +10,8 @@ export async function getHome(req, res) {
       const transactions = await db
         .collection("transactions")
         .find({ _id: session.userId })
-        .toArray()
-        .reverse();
-      res.send(transactions);
+        .toArray();
+      res.send(transactions.reverse());
     } else {
       res.send("Usuário não encontrado.");
     }
