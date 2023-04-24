@@ -4,11 +4,11 @@ export async function postTransacao(req, res) {
   const { valor, descricao } = req.body;
   const { tipo } = req.params;
   if (tipo !== "entrada" && tipo !== "saida") return res.sendStatus(422);
-
+  const session = res.locals.session;
   try {
     await db
       .collection("transactions")
-      .insertOne({ tipo: tipo, valor: valor, descricao: descricao });
+      .insertOne({ userId:session.userId, tipo: tipo, valor: valor, descricao: descricao });
     res.sendStatus(201);
   } catch (err) {
     res.status(500).send(err.message);
@@ -22,7 +22,7 @@ export async function getHome(req, res) {
     if (user) {
       const transactions = await db
         .collection("transactions")
-        .find({ _id: session.userId })
+        .find({ userId: session.userId })
         .toArray();
       res.send(transactions.reverse());
     } else {
