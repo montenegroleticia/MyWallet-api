@@ -1,14 +1,23 @@
 import db from "../database/database.conection.js";
 
+const now = new Date();
+const day = now.getDate();
+const month = now.getMonth() + 1;
+const date = day + "/" + month;
+
 export async function postTransacao(req, res) {
   const { valor, descricao } = req.body;
   const { tipo } = req.params;
   if (tipo !== "entrada" && tipo !== "saida") return res.sendStatus(422);
   const session = res.locals.session;
   try {
-    await db
-      .collection("transactions")
-      .insertOne({ userId:session.userId, tipo: tipo, valor: valor, descricao: descricao });
+    await db.collection("transactions").insertOne({
+      userId: session.userId,
+      tipo: tipo,
+      valor: valor,
+      descricao: descricao,
+      data: date,
+    });
     res.sendStatus(201);
   } catch (err) {
     res.status(500).send(err.message);
