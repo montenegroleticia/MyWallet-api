@@ -54,6 +54,6 @@ export async function deleteTransaction(req, res) {
       .deleteOne({ _id: new ObjectId(id) });
     res.sendStatus(204);
   } catch (err) {
-    res.status(500).send(err.message);
+    res.status(409).send(err.message);
   }
 }

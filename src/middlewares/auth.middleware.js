@@ -14,6 +14,6 @@ export default async function authValidation(req, res, next) {
     res.locals.token = token;
     next();
   } catch (err) {
-    res.status(409).send(err.message);
+    res.status(500).send(err.message);
   }
 }
