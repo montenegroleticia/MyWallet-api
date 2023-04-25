@@ -52,7 +52,7 @@ export async function deleteTransaction(req, res) {
     const transactions = await db
       .collection("transactions")
       .deleteOne({ _id: new ObjectId(id) });
-    res.status(204).send(transactions);
+    res.sendStatus(204);
   } catch (err) {
     res.status(500).send(err.message);
   }
