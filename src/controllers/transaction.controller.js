@@ -1,3 +1,4 @@
+import { ObjectId } from "mongodb";
 import db from "../database/database.conection.js";
 
 const now = new Date();
@@ -48,7 +49,10 @@ export async function deleteTransaction(req, res) {
   const { id } = req.params;
 
   try {
-    await db.collection("transactions").deleteOne({ id });
+    const transactions = await db
+      .collection("transactions")
+      .deleteOne({ _id: new ObjectId(id) });
+    res.status(204).send(transactions);
   } catch (err) {
     res.status(500).send(err.message);
   }
