@@ -46,6 +46,6 @@ export async function deleteLogout(req, res) {
     await db.collection("sessions").deleteOne({ token });
     res.sendStatus(200);
   } catch (err) {
-    res.status(500).send(err.message);
+    res.status(409).send(err.message);
   }
 }
