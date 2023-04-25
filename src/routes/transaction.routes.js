@@ -16,4 +16,5 @@ router.post(
   postTransacao
 );
 router.get("/home", authValidation, getHome);
+router.delete("/:id", authValidation, deleteTransaction);
 export default router;

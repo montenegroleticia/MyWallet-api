@@ -43,3 +43,13 @@ export async function getHome(req, res) {
     res.status(500).send(err.message);
   }
 }
+
+export async function deleteTransaction(req, res) {
+  const { id } = req.params;
+
+  try {
+    await db.collection("transactions").deleteOne({ id });
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
+}
