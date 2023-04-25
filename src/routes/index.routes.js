@@ -4,7 +4,7 @@ import user from "./user.routes.js";
 
 const router = Router();
 
-router.use(transaction);
 router.use(user);
+router.use(transaction);
 
 export default router;
