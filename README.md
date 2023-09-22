@@ -20,3 +20,22 @@ Tools
     <img align = "center" alt = "Git" src = "https://img.shields.io/badge/GIT-E44C30?style=for-the-badge&logo=git&logoColor=white" />
     <img align = "center" alt = "NPM" src = "https://img.shields.io/badge/NPM-%23000000.svg?style=for-the-badge&logo=npm&logoColor=white" />
 </div>
+
+#### How to run
+
+1. Clone this repository:
+```bash
+https://github.com/montenegroleticia/MyWallet-api
+```
+2. Install dependencies:
+```bash
+npm i
+```
+3. Run the API with:
+```bash
+npm run dev
+```
+4. Finally, access it in your preferred browser or use Thunder Client or similar:
+```bash
+http://localhost:4000
+```
